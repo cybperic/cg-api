@@ -1,0 +1,16 @@
+{
+    "name": "cybperic/cg-api",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Boban Perić",
+            "email": "cybperic@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"Cg\\": "."}
+    },
+    "require": {
+        "php-curl-class/php-curl-class": "^9.4"
+    }
+}

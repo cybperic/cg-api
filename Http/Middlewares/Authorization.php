@@ -1,5 +1,5 @@
 <?php
-namespace Middlewares;
+namespace Cg\Http\Middlewares;
 
 
 class Authorization

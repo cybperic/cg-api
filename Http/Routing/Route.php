@@ -1,5 +1,5 @@
 <?php
-namespace Routing;
+namespace Cg\Http\Routing;
 
 
 class Route {
@@ -20,8 +20,6 @@ class Route {
         $parsedUrl = parse_url($_SERVER['REQUEST_URI']);
         $path = $parsedUrl['path'];
         $path = urldecode($path);
-        //print_r($path);
-        //return;
 
         $method = $_SERVER['REQUEST_METHOD'];
         $pathFound = false;
@@ -31,7 +29,6 @@ class Route {
         {
             if (preg_match("#^{$route['expression']}$#iu", $path, $matches))
             {
-                //print_r($matches);
                 array_shift($matches);
                 $pathFound = true;
 

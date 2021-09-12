@@ -1,13 +1,26 @@
 <?php
-namespace DataProviders\Yandex;
+namespace Cg\DataProviders\Yandex;
 
-use DataProviders\DataProvider;
+use Cg\DataProviders\DataProvider;
+use Curl\Curl;
 
 class YandexDataProvider extends DataProvider
 {
     public function getStatistics($siteId)
     {
-        //retrieve statistics from yandex for given site id. Probably we have a mapping local ID <-> external yandex ID
+        //retrieve statistics from yandex for given site id.
         return 145;
+    }
+
+    public function getPageViews($siteId)
+    {
+        //retrieve page views from yandex for given site id.
+        return 145;
+    }
+
+    public function getLocations($siteId)
+    {
+        //retrieve locations from yandex for given site id.
+        return array('Boston' => 123, 'London' => 234);
     }
 }

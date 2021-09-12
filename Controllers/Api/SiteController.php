@@ -1,8 +1,8 @@
 <?php
-namespace Controllers\Api;
+namespace Cg\Controllers\Api;
 
-use Models\Site;
-use Middlewares\Authorization;
+use Cg\Models\Site;
+use Cg\Http\Middlewares\Authorization;
 
 class SiteController
 {
@@ -10,13 +10,33 @@ class SiteController
 
     public function getStatistics($siteId)
     {
+        if (!Authorization::isApiCallAuthorized()) return null;
 
-        if (!Authorization::isApiCallAuthorized())
-        {
-            return null;
-        }
+        $site = new Site($siteId);
+        $results = $site->getAggregatedData('statistics');
+        return $this->returnResults($siteId, $results);
+    }
 
+    public function getPageViews($siteId)
+    {
+        if (!Authorization::isApiCallAuthorized()) return null;
 
+        $site = new Site($siteId);
+        $results = $site->getAggregatedData('pageViews');
+        return $this->returnResults($siteId, $results);
+    }
+
+    public function getLocations($siteId)
+    {
+        if (!Authorization::isApiCallAuthorized()) return null;
+
+        $site = new Site($siteId);
+        $results = $site->getAggregatedData('locations');
+        return $this->returnResults($siteId, $results);
+    }
+
+    protected function returnResults($siteId, $results)
+    {
         header("Content-Type: application/json");
         $response = array(
             'error' => false,
@@ -24,20 +44,18 @@ class SiteController
             'siteId' => (int)$siteId,
             'data' => array()
         );
-
-        if ($siteId > 100)
+        if ($results)
+        {
+            $response['data'] = $results;
+        }
+        else
         {
             $response['error'] = true;
-            $response['message'] = 'The provided ID does not match our records.';
-            echo json_encode($response);
-            return true;
+            $response['Message'] = 'Api data unavailable.';
         }
 
-        $site = new Site($siteId);
-        $response['data'] = $site->getAggregatedStatistics();
         echo json_encode($response);
         return true;
     }
-
 
 }
